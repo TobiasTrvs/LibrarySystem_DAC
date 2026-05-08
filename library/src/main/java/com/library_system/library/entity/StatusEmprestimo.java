@@ -1,5 +1,7 @@
 package com.library_system.library.entity;
 
-public class StatusEmprestimo {
-
+public enum StatusEmprestimo {
+    ATIVO,
+    FINALIZADO,
+    ATRASADO
 }
