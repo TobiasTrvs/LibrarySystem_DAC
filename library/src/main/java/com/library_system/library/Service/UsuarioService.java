@@ -16,7 +16,7 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    public void salvarUsuario (Usuario usuario){
+    public void salvarUsuario(Usuario usuario){
         repository.saveAndFlush(usuario);
     }
 
@@ -27,6 +27,10 @@ public class UsuarioService {
     public Optional <Usuario> buscarUsuarioPorID(Long id){
         return repository.findById(id);
     
+    }
+
+    public void deletarUsuarioPorId(Long id){
+        repository.deleteById(id);
     }
 
 
