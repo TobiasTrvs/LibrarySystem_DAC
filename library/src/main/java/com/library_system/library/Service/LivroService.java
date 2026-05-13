@@ -1,10 +1,10 @@
 package com.library_system.library.Service;
 import java.util.List;
-
+import org.springframework.stereotype.Service;
 import com.library_system.library.Repository.LivroRepository;
 import com.library_system.library.entity.Livro;
-
 import jakarta.transaction.Transactional;
+@Service
 
 public class LivroService {
 
