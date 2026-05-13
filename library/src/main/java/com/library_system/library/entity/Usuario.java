@@ -1,5 +1,7 @@
 package com.library_system.library.entity;
 
+import org.springframework.stereotype.Service;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,6 +9,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
  public class Usuario {
 
     @Id
