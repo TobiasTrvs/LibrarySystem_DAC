@@ -42,7 +42,9 @@ public class LivroService {
 
     @Transactional
     public void deletarLivro(Long id) {
-        repository.deleteById(id);
+        Livro livro = buscarLivroPorId(id);
+
+        repository.delete(livro);
     }
 }
 
