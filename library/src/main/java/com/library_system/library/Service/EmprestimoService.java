@@ -43,5 +43,9 @@ public class EmprestimoService {
 
         return repository.save(emprestimo);
     }
+
+    public void deletarEmprestimo(long id){
+        repository.deleteById(id);
+    }
     
 }
