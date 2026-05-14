@@ -9,9 +9,9 @@ import java.util.List;
 @Service
 public class ItemEmprestimoService {
 
-    private final ItemEmprestimoService repository;
+    private final ItemEmprestimoRepository repository;
 
-    public ItemEmprestimoService(ItemEmprestimoService repository) {
+    public ItemEmprestimoService(ItemEmprestimoRepository repository) {
         this.repository = repository;
     }
 
