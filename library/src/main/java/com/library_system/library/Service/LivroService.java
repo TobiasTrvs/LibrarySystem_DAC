@@ -24,7 +24,7 @@ public class LivroService {
 
     public Livro buscarLivroPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Livro não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Livro com ID " + id + " não encontrado"));
     }
 
     public Livro atualizarLivro(Long id, Livro livroAtualizado) {
