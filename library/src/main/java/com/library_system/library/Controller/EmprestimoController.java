@@ -15,7 +15,7 @@ import com.library_system.library.Service.EmprestimoService;
 import com.library_system.library.entity.Emprestimo;
 
 @RestController
-@RequestMapping("/exemplares")
+@RequestMapping("/emprestimos")
 
 public class EmprestimoController {
       private final EmprestimoService service;
