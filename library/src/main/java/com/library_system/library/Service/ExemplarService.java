@@ -23,7 +23,7 @@ public class ExemplarService {
 
     public Exemplar buscarExemplarPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Exemplar com ID " + id + " não encontrado"));
     }
 
     public Exemplar atualizarStatus(Long id, StatusExemplar status) {
@@ -36,7 +36,10 @@ public class ExemplarService {
     }
 
     public void deletarExemplar(Long id) {
-        repository.deleteById(id);
+       
+        Exemplar exemplar = buscarExemplarPorId(id);
+
+        repository.delete(exemplar);
     }
     
 }
