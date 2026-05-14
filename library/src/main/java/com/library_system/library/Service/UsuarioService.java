@@ -29,13 +29,15 @@ public class UsuarioService {
 
     @Transactional
     public void deletarUsuario(Long id){
-        repository.deleteById(id);
+        Usuario usuario = buscarUsuarioPorId(id);
+
+        repository.delete(usuario);
     }
 
 
     public Usuario buscarUsuarioPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuário com ID " + id + " não encontrado"));
     }
 
     public Usuario atualizarUsuario(Long id, Usuario usuarioAtualizado) {
