@@ -19,27 +19,19 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    public void salvarUsuario(Usuario usuario){
-        repository.saveAndFlush(usuario);
+    public Usuario salvarUsuario(Usuario usuario){
+        return repository.saveAndFlush(usuario);
     }
 
     public List<Usuario>ListarUsuario(){
         return repository.findAll();
     }
 
-    public void deletarUsuario(Usuario usuario){
-        repository.delete(usuario);
-    }
-
-    public Optional <Usuario> buscarUsuarioPorID(Long id){
-        return repository.findById(id);
-    
-    }
-
     @Transactional
-    public void deletarUsuarioPorId(Long id){
+    public void deletarUsuario(Long id){
         repository.deleteById(id);
     }
+
 
     public Usuario buscarUsuarioPorId(Long id) {
         return repository.findById(id)
