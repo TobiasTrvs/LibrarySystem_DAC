@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library_system.library.Service.UsuarioService;
+import com.library_system.library.dto.UsuarioRequestDTO;
 import com.library_system.library.entity.Usuario;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -25,9 +28,11 @@ public class UsuarioController {
         this.service = service;
     }
 
-    @PostMapping
-    public Usuario salvarUsuario(@RequestBody Usuario usuario) {
-        return service.salvarUsuario(usuario);
+     @PostMapping
+    public Usuario salvarUsuario(
+            @Valid @RequestBody UsuarioRequestDTO dto) {
+
+        return service.salvarUsuario(dto);
     }
 
     @GetMapping

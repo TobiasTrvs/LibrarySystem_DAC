@@ -11,5 +11,8 @@ import jakarta.transaction.Transactional;
 public interface UsuarioRepostitory extends JpaRepository <Usuario, Long> {
 
     @Transactional
-    void deleteById(long id);
+    public void deleteById(long id);
+
+    public boolean existsByEmail(String email);
 }
+

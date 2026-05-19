@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.library_system.library.Repository.UsuarioRepostitory;
+import com.library_system.library.dto.UsuarioRequestDTO;
 import com.library_system.library.entity.Usuario;
 
 import jakarta.transaction.Transactional;
@@ -19,8 +20,19 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    public Usuario salvarUsuario(Usuario usuario){
-        return repository.saveAndFlush(usuario);
+   public Usuario salvarUsuario(UsuarioRequestDTO dto) {
+
+        if(repository.existsByEmail(dto.getEmail())) {
+            throw new RuntimeException("Email já cadastrado");
+        }
+
+        Usuario usuario = new Usuario();
+
+        usuario.setNome(dto.getNome());
+        usuario.setEmail(dto.getEmail());
+        usuario.setSenha(dto.getSenha());
+
+        return repository.save(usuario);
     }
 
     public List<Usuario>ListarUsuario(){
