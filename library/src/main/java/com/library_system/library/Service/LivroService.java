@@ -16,9 +16,15 @@ public class LivroService {
     }
 
     public Livro salvarLivro(LIvroRequestDTO dto) {
+        if (repository.existsByIsbn(dto.getIsbn())){
+            throw new RuntimeException("Esse livro já está cadastrado");
+        }
 
-        //verificar se o livro já existe
-        // se ele não existir, instancio um livro novo e salvo
+        Livro livro = new Livro();
+        livro.setTitulo(dto.getTitulo());
+        livro.setAutor(dto.getAutor());
+        livro.setAnoPublicacao(dto.getAnoPublicacao());
+        livro.setEditora(dto.getEditora());
         return repository.save(livro);
     }
 
