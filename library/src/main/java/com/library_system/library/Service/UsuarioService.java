@@ -23,7 +23,7 @@ public class UsuarioService {
    public Usuario salvarUsuario(UsuarioRequestDTO dto) {
 
         if(repository.existsByEmail(dto.getEmail())) {
-            throw new RuntimeException("Email já cadastrado");
+            throw new RuntimeException("Usuário já cadastrado");
         }
 
         Usuario usuario = new Usuario();
@@ -31,7 +31,7 @@ public class UsuarioService {
         usuario.setNome(dto.getNome());
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(dto.getSenha());
-
+        usuario.setTelefone(dto.getTelefone());
         return repository.save(usuario);
     }
 
