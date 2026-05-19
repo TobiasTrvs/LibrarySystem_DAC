@@ -2,6 +2,7 @@ package com.library_system.library.Service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.library_system.library.Repository.LivroRepository;
+import com.library_system.library.dto.LIvroRequestDTO;
 import com.library_system.library.entity.Livro;
 import jakarta.transaction.Transactional;
 @Service
@@ -14,7 +15,10 @@ public class LivroService {
         this.repository = repository;
     }
 
-    public Livro salvarLivro(Livro livro) {
+    public Livro salvarLivro(LIvroRequestDTO dto) {
+
+        //verificar se o livro já existe
+        // se ele não existir, instancio um livro novo e salvo
         return repository.save(livro);
     }
 

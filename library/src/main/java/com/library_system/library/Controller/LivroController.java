@@ -12,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library_system.library.Service.LivroService;
+import com.library_system.library.dto.LIvroRequestDTO;
 import com.library_system.library.entity.Livro;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/livros")
@@ -25,8 +28,8 @@ public class LivroController {
     }
 
     @PostMapping
-    public Livro salvarLivro(@RequestBody Livro livro) {
-        return service.salvarLivro(livro);
+    public Livro salvarLivro( @Valid @RequestBody LIvroRequestDTO dto) {
+        return service.salvarLivro(dto);
     }
 
     @GetMapping
