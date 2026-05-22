@@ -1,5 +1,5 @@
 package com.library_system.library.entity;
-
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 import jakarta.persistence.*;
@@ -23,4 +23,11 @@ import lombok.*;
 
     @Enumerated(EnumType.STRING)
     private tipoUsuario tipo;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Emprestimo> emprestimos;
+
+
 }
+
+
