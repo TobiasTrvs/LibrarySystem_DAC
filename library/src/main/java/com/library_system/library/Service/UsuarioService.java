@@ -49,7 +49,7 @@ public class UsuarioService {
 
     public Usuario buscarUsuarioPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário com ID " + id + " não encontrado"));
+                .orElseThrow(() -> new RuntimeException("Esse usuário não existe"));
     }
 
     public Usuario atualizarUsuario(Long id, Usuario usuarioAtualizado) {

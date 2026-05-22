@@ -17,7 +17,7 @@ public class LivroService {
 
     public Livro salvarLivro(LIvroRequestDTO dto) {
         if (repository.existsByIsbn(dto.getIsbn())){
-            throw new RuntimeException("Esse livro já está cadastrado");
+            throw new RuntimeException("Esse livro já foi cadastrado");
         }
 
         Livro livro = new Livro();
@@ -53,7 +53,6 @@ public class LivroService {
     @Transactional
     public void deletarLivro(Long id) {
         Livro livro = buscarLivroPorId(id);
-
         repository.delete(livro);
     }
 }
