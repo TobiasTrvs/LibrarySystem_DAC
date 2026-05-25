@@ -13,8 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library_system.library.Service.ExemplarService;
+import com.library_system.library.dto.ExemplarRequestDTO;
 import com.library_system.library.entity.Exemplar;
 import com.library_system.library.entity.StatusExemplar;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/exemplares")
@@ -27,8 +30,8 @@ public class ExemplarController {
     }
 
     @PostMapping
-    public Exemplar salvarExemplar(@RequestBody Exemplar exemplar) {
-        return service.salvarExemplar(exemplar);
+    public Exemplar salvarExemplar( @Valid @RequestBody ExemplarRequestDTO dto) {
+        return service.salvarExemplar(dto);
     }
 
     @GetMapping
