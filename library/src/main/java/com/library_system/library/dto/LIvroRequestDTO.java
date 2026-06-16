@@ -1,6 +1,7 @@
 package com.library_system.library.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class LIvroRequestDTO {
     @NotBlank( message = "autor obrigatório")
     private String autor;
 
+    @Size(min = 13, max = 13)
     @NotBlank(message = "isbn obrigatório")
     private String isbn;
 

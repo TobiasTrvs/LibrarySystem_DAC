@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import com.library_system.library.Repository.EmprestimoRepository;
 import com.library_system.library.Service.EmprestimoService;
+import com.library_system.library.dto.EmprestimoRequestDTO;
 import com.library_system.library.entity.Emprestimo;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/emprestimos")
@@ -25,8 +28,8 @@ public class EmprestimoController {
     }
 
     @PostMapping
-    public Emprestimo realizarEmprestimo(@RequestBody Emprestimo emprestimo) {
-        return service.realizarEmprestimo(emprestimo);
+    public Emprestimo realizarEmprestimo( @Valid @RequestBody EmprestimoRequestDTO dto) {
+        return service.realizarEmprestimo(dto);
     }
 
     @GetMapping

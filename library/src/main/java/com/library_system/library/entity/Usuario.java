@@ -27,6 +27,9 @@ import lombok.*;
     @OneToMany(mappedBy = "usuario")
     private List<Emprestimo> emprestimos;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<Penalidade> penalidades;
+
 
 }
 

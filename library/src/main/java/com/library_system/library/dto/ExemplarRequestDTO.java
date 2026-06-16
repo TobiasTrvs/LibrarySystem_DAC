@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ExemplarRequestDTO {
-    
+   
     @NotBlank(message = "código obrigatório")
     private String codigoExemplar;
 

@@ -37,8 +37,11 @@ public class UsuarioService {
 
     @Transactional
     public void deletarUsuario(Long id){
-        Usuario usuario = buscarUsuarioPorId(id);
+        if(repository.existsById(id)){
+            throw new RuntimeException( "Esse usuário não existe");
+        }
 
+        Usuario usuario = buscarUsuarioPorId(id);
         repository.delete(usuario);
     }
 
