@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library_system.library.Service.LivroService;
-import com.library_system.library.dto.LIvroRequestDTO;
+import com.library_system.library.dto.livro.LIvroRequestDTO;
 import com.library_system.library.entity.Livro;
 
 import jakarta.validation.Valid;

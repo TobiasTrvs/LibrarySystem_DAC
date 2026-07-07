@@ -1,4 +1,4 @@
-package com.library_system.library.dto;
+package com.library_system.library.dto.exemplar;
 import com.library_system.library.entity.StatusExemplar;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

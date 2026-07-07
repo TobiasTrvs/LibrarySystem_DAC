@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library_system.library.Service.UsuarioService;
-import com.library_system.library.dto.UsuarioRequestDTO;
+import com.library_system.library.dto.usuario.UsuarioRequestDTO;
 import com.library_system.library.entity.Usuario;
 
 import jakarta.validation.Valid;

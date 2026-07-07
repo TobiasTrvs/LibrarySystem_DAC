@@ -10,9 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.library_system.library.Repository.EmprestimoRepository;
 import com.library_system.library.Service.EmprestimoService;
-import com.library_system.library.dto.EmprestimoRequestDTO;
+import com.library_system.library.dto.emprestimo.EmprestimoRequestDTO;
 import com.library_system.library.entity.Emprestimo;
 
 import jakarta.validation.Valid;

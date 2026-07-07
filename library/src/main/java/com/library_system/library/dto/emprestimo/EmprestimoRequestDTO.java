@@ -1,4 +1,4 @@
-package com.library_system.library.dto;
+package com.library_system.library.dto.emprestimo;
 
 import java.time.LocalDate;
 

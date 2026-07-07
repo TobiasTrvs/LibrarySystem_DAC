@@ -2,21 +2,21 @@ package com.library_system.library.Service;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.library_system.library.Repository.LivroRepository;
-import com.library_system.library.dto.LIvroRequestDTO;
+import com.library_system.library.dto.livro.LIvroRequestDTO;
 import com.library_system.library.entity.Livro;
 import jakarta.transaction.Transactional;
 @Service
 
 public class LivroService {
 
-     private final LivroRepository repository;
+     private final LivroRepository livroRepository;
 
     public LivroService(LivroRepository repository) {
-        this.repository = repository;
+        this.livroRepository = repository;
     }
 
     public Livro salvarLivro(LIvroRequestDTO dto) {
-        if (repository.existsByIsbn(dto.getIsbn())){
+        if (livroRepository.existsByIsbn(dto.getIsbn())){
             throw new RuntimeException("Esse livro já foi cadastrado");
         }
 
@@ -25,15 +25,15 @@ public class LivroService {
         livro.setAutor(dto.getAutor());
         livro.setAnoPublicacao(dto.getAnoPublicacao());
         livro.setEditora(dto.getEditora());
-        return repository.save(livro);
+        return livroRepository.save(livro);
     }
 
     public List<Livro> listarLivros() {
-        return repository.findAll();
+        return livroRepository.findAll();
     }
 
     public Livro buscarLivroPorId(Long id) {
-        return repository.findById(id)
+        return livroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro com ID " + id + " não encontrado"));
     }
 
@@ -47,13 +47,13 @@ public class LivroService {
         livro.setAnoPublicacao(livroAtualizado.getAnoPublicacao());
         livro.setIsbn(livroAtualizado.getIsbn());
 
-        return repository.save(livro);
+        return livroRepository.save(livro);
     }
 
     @Transactional
     public void deletarLivro(Long id) {
         Livro livro = buscarLivroPorId(id);
-        repository.delete(livro);
+        livroRepository.delete(livro);
     }
 }
 

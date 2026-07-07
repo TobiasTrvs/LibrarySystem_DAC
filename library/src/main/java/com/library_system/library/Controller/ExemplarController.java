@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.library_system.library.Service.ExemplarService;
-import com.library_system.library.dto.ExemplarRequestDTO;
+import com.library_system.library.dto.exemplar.ExemplarRequestDTO;
 import com.library_system.library.entity.Exemplar;
 import com.library_system.library.entity.StatusExemplar;
 
