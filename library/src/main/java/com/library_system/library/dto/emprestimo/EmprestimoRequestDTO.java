@@ -26,7 +26,10 @@ public class EmprestimoRequestDTO {
     @NotNull(message = "O ID do usuário é obrigatório")
     private Long usuarioID;
 
-    private long emprestimoID;
+    @NotNull(message = "O ID do livro é obrigatório")
+    private long livroID;
+
+    // colocar o id do empréstimo pra ser gerado em outra classe
 
     
 

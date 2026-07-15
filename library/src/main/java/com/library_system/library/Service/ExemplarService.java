@@ -44,7 +44,7 @@ public class ExemplarService {
                 .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
     }
 
-
+    // alterar esse método para receber um dto de exemplar
     public Exemplar atualizarStatus(Long id, StatusExemplar status) {
         Exemplar exemplar = buscarExemplarPorId(id);
         exemplar.setStatus(status);

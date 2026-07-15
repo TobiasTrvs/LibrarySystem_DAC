@@ -37,6 +37,7 @@ public class LivroService {
                 .orElseThrow(() -> new RuntimeException("Livro com ID " + id + " não encontrado"));
     }
 
+    // alterar método para receber um dto
     public Livro atualizarLivro(Long id, Livro livroAtualizado) {
 
         Livro livro = buscarLivroPorId(id);

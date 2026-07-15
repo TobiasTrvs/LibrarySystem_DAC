@@ -11,13 +11,16 @@ import com.library_system.library.Repository.LivroRepository;
 import com.library_system.library.Repository.PenalidadeRepository;
 import com.library_system.library.Repository.UsuarioRepostitory;
 import com.library_system.library.dto.emprestimo.EmprestimoRequestDTO;
+import com.library_system.library.dto.penalidade.PenalidadeRequestDTO;
 import com.library_system.library.entity.Usuario;
 import jakarta.transaction.Transactional;
 
 import com.library_system.library.entity.Emprestimo;
 import com.library_system.library.entity.Exemplar;
 import com.library_system.library.entity.Livro;
+import com.library_system.library.entity.Penalidade;
 import com.library_system.library.entity.StatusEmprestimo;
+import com.library_system.library.entity.StatusExemplar;
 import com.library_system.library.entity.StatusPenalidade;
 
 @Service
@@ -29,6 +32,7 @@ public class EmprestimoService {
     private ExemplarRepository exemplarRepository;
     private PenalidadeRepository penalidadeRepository;
     private Exemplar exemplar;
+    private PenalidadeService penalidadeService;
 
     public EmprestimoService(EmprestimoRepository repository) {
         this.repository = repository;
@@ -38,7 +42,7 @@ public class EmprestimoService {
     // realizar empréstimo
     // terminar o método de aplicar penalidade e validar empréstimo para depois concluir esse método
     public Emprestimo realizarEmprestimo(EmprestimoRequestDTO dto) {
-        validarEmprestimo(dto.getUsuarioID(), dto.getEmprestimoID()); // corrigir o parâmetrro passado para exemplar ID configurando o emprestimo requestDTO
+        validarEmprestimo(dto.getUsuarioID(), dto.getLivroID()); // corrigir o parâmetrro passado para exemplar ID configurando o emprestimo requestDTO
         Emprestimo emprestimo = new Emprestimo();
         emprestimo.setDataEmprestimo(LocalDate.now());
         emprestimo.setStatus(StatusEmprestimo.ATIVO);
@@ -59,30 +63,29 @@ public class EmprestimoService {
 
     // registrar devolução
     // fazer verificação de atraso e aplicar penalidade (caso realmente haja atraso)
-    public Emprestimo registrarDevolucao(Long id) {
-        Emprestimo emprestimo = buscarEmprestimoPorId(id);
-        emprestimo.setDataDevolucao(LocalDate.now());
+    public Emprestimo registrarDevolucao(EmprestimoRequestDTO dto) {
+        if (verificarAtraso(dto.getDataDevolucao(), dto.getDataPrevistaDevolucao())){
+            PenalidadeRequestDTO penalidadeDTO  = new PenalidadeRequestDTO();
+            penalidadeDTO.setUsuarioId(dto.getUsuarioID());
+            penalidadeDTO.setMotivo("atraso na devolução do livro");
+            penalidadeDTO.setDataFim(dto.getDataDevolucao().plusDays(7));
+            penalidadeService.aplicarPenalidade(penalidadeDTO);
+        }
+        Emprestimo emprestimo = buscarEmprestimoPorId(dto.getLivroID());
+        emprestimo.setDataDevolucao(dto.getDataDevolucao());
         emprestimo.setStatus(StatusEmprestimo.FINALIZADO);
         return repository.save(emprestimo);
     }
+    
 
-    // validar empréstimo
-    public void validarEmprestimo(long usuarioID,  long exemplarID){
 
-        Usuario usuario = usuarioRepository.findById(usuarioID).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        Exemplar exemplar = exemplarRepository.findById(exemplarID).orElseThrow(() -> new RuntimeException("exemplar não encontrado")) ;
+    // validar empréstimo (lembrar de verificar se o usuário atingiu o limite de empéstimo, logo após verificar se o mesmo possui penalidade ativa)
+    public void validarEmprestimo(long usuarioID,long livroID){
+        usuarioRepository.findById(usuarioID).orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        exemplarRepository.findByLivroIdAndStatus(livroID, StatusExemplar.DISPONIVEL);
         if(penalidadeRepository.existsByUsuarioIdAndStatus(usuarioID,  StatusPenalidade.ATIVA)){
             throw new RuntimeException("Usuário possui penalidade ativa");        
-        }
-        // errado, pois o método deve apenas VALDAR O EMPRESTIMO. a realização do empréstimo em si, deve ser feita apenas no nétodo "realiizar empréstimo"
-        Emprestimo emprestimo = new Emprestimo();
-        emprestimo.setUsuario(usuario);
-        emprestimo.setId(exemplarID);
-        emprestimo.setStatus(StatusEmprestimo.ATIVO);
-        emprestimo.setDataEmprestimo(LocalDate.now());
-        emprestimo.setDataPrevistaDevolucao(LocalDate.now().plusDays(7));
-        repository.save(emprestimo);
-        
+        } 
     }
 
     //deletar empréstimo
@@ -96,9 +99,14 @@ public class EmprestimoService {
         // List <Exemplar> todosOsExemplares = livro.getExemplares();
 
 
-    // por enquanto, esse método busca apenas os exemplares através do ID, mas não apenas os exemplares com status disponivel
-    public List<Exemplar> buscarExemplares(long livroID){
-        Livro livro = livroRepository.findById(livroID).orElseThrow(() -> new RuntimeException("exemplar não encontrado"));
-        return livro.getExemplares();
+        //  por enquanto, esse método busca apenas os exemplares através do ID, mas não apenas os exemplares com status disponivel
+        // public List<Exemplar> buscarExemplares(long livroID){
+        //     Livro livro = livroRepository.findById(livroID).orElseThrow(() -> new RuntimeException("exemplar não encontrado"));
+        //     return livro.getExemplares();
+        // }
+
+    // verficar se houve atraso na devolução
+    public boolean verificarAtraso(LocalDate dataDevolucao, LocalDate dataPrevista){
+        return dataDevolucao.isAfter(dataPrevista); 
     }
-    }
+}
