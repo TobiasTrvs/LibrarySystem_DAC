@@ -1,11 +1,9 @@
 package com.library_system.library.dto.exemplar;
 import com.library_system.library.entity.StatusExemplar;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Setter
-@Getter
+@Data
 public class ExemplarRequestDTO {
    
     @NotBlank(message = "código obrigatório")

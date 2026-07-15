@@ -21,7 +21,7 @@ public class ItemEmprestimoMapper {
                     item.getExemplar().getCodigoExemplar());
 
             if (item.getExemplar().getLivro() != null) {
-                dto.setLivroId(
+                dto.setId(
                         item.getExemplar().getLivro().getId());
 
                 dto.setTituloLivro(

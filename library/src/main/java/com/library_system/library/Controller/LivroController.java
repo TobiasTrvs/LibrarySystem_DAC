@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.library_system.library.Service.LivroService;
 import com.library_system.library.dto.livro.LIvroRequestDTO;
+import com.library_system.library.dto.livro.LivroResponseDTO;
 import com.library_system.library.entity.Livro;
 
 import jakarta.validation.Valid;
@@ -28,7 +29,7 @@ public class LivroController {
     }
 
     @PostMapping
-    public Livro salvarLivro( @Valid @RequestBody LIvroRequestDTO dto) {
+    public LivroResponseDTO salvarLivro( @Valid @RequestBody LIvroRequestDTO dto) {
         return service.salvarLivro(dto);
     }
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.library_system.library.Service.ExemplarService;
 import com.library_system.library.dto.exemplar.ExemplarRequestDTO;
+import com.library_system.library.dto.exemplar.ExemplarResponseDTO;
 import com.library_system.library.entity.Exemplar;
 import com.library_system.library.entity.StatusExemplar;
 
@@ -30,7 +31,7 @@ public class ExemplarController {
     }
 
     @PostMapping
-    public Exemplar salvarExemplar( @Valid @RequestBody ExemplarRequestDTO dto) {
+    public ExemplarResponseDTO salvarExemplar( @Valid @RequestBody ExemplarRequestDTO dto) {
         return service.salvarExemplar(dto);
     }
 

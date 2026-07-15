@@ -3,7 +3,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.library_system.library.Repository.LivroRepository;
 import com.library_system.library.dto.livro.LIvroRequestDTO;
+import com.library_system.library.dto.livro.LivroResponseDTO;
 import com.library_system.library.entity.Livro;
+import com.library_system.library.mapper.LivroMapper;
+
 import jakarta.transaction.Transactional;
 @Service
 
@@ -15,17 +18,14 @@ public class LivroService {
         this.livroRepository = repository;
     }
 
-    public Livro salvarLivro(LIvroRequestDTO dto) {
+    public LivroResponseDTO salvarLivro(LIvroRequestDTO dto) {
         if (livroRepository.existsByIsbn(dto.getIsbn())){
             throw new RuntimeException("Esse livro já foi cadastrado");
         }
 
-        Livro livro = new Livro();
-        livro.setTitulo(dto.getTitulo());
-        livro.setAutor(dto.getAutor());
-        livro.setAnoPublicacao(dto.getAnoPublicacao());
-        livro.setEditora(dto.getEditora());
-        return livroRepository.save(livro);
+        Livro livro = LivroMapper.toEntity(dto);
+        Livro livroSalvo = livroRepository.save(livro);
+        return LivroMapper.toResponseDTO(livroSalvo);
     }
 
     public List<Livro> listarLivros() {

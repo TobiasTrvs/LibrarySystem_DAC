@@ -1,4 +1,6 @@
 package com.library_system.library.dto.usuario;
+import com.library_system.library.entity.tipoUsuario;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -19,4 +21,6 @@ public class UsuarioRequestDTO {
     private String senha;
 
     private String  telefone;
+
+    private tipoUsuario tipo;
 }

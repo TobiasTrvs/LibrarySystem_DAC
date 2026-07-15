@@ -4,8 +4,12 @@ import org.springframework.stereotype.Service;
 import com.library_system.library.Repository.ExemplarRepository;
 import com.library_system.library.Repository.LivroRepository;
 import com.library_system.library.dto.exemplar.ExemplarRequestDTO;
+import com.library_system.library.dto.exemplar.ExemplarResponseDTO;
 import com.library_system.library.entity.Exemplar;
+import com.library_system.library.entity.Livro;
 import com.library_system.library.entity.StatusExemplar;
+import com.library_system.library.mapper.ExemplarMapper;
+
 import jakarta.transaction.Transactional;
 
 @Service
@@ -19,17 +23,11 @@ public class ExemplarService {
         this.exemplarRepository = repository;
     }
 
-    public Exemplar salvarExemplar(ExemplarRequestDTO dto) { 
-        if (exemplarRepository.existsById(dto.getLivroId())){
-            throw new RuntimeException ("exemplar já cadastrado");
-        }
-        Exemplar exemplar = new Exemplar();
-        exemplar.getCodigoExemplar();
-        exemplar.getId();
-        exemplar.getLivro();
-        exemplar.getStatus();
-        
-        return exemplarRepository.save(exemplar);
+    public ExemplarResponseDTO salvarExemplar(ExemplarRequestDTO dto) { 
+        Livro livro = livroRepository.findById(dto.getLivroId()).orElseThrow(() ->  new RuntimeException("Livro não encontrado"));          
+        Exemplar exemplar = ExemplarMapper.toEntity(dto, livro);
+        Exemplar exemplarSalvo = exemplarRepository.save(exemplar);
+        return ExemplarMapper.toResponseDTO(exemplarSalvo);
     }
 
 
@@ -37,7 +35,7 @@ public class ExemplarService {
         return exemplarRepository.findAll();
     }
 
-
+    // alterar para receber um requestdto e retornar um responsedto
     public Exemplar buscarExemplarPorId(Long id) {
         return exemplarRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
