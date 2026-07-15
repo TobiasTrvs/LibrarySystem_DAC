@@ -5,7 +5,6 @@ import com.library_system.library.Repository.ExemplarRepository;
 import com.library_system.library.Repository.LivroRepository;
 import com.library_system.library.dto.exemplar.ExemplarRequestDTO;
 import com.library_system.library.entity.Exemplar;
-import com.library_system.library.entity.Livro;
 import com.library_system.library.entity.StatusExemplar;
 import jakarta.transaction.Transactional;
 

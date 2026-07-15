@@ -42,8 +42,8 @@ public class EmprestimoController {
     }
 
     @PutMapping("/{id}/devolucao")
-    public Emprestimo registrarDevolucao(@PathVariable Long id) {
-        return service.registrarDevolucao(id);
+    public Emprestimo registrarDevolucao(@PathVariable EmprestimoRequestDTO dto) {
+        return service.registrarDevolucao(dto);
     }
 
     @DeleteMapping("/{id}")

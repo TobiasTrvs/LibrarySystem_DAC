@@ -27,6 +27,7 @@ public class Usuario {
     private String email;
     private String senha;
     private String telefone;
+    private final int LimiteEmprestimo = 3;
 
     @Enumerated(EnumType.STRING)
     private tipoUsuario tipo;
