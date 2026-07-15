@@ -14,7 +14,6 @@ import com.library_system.library.dto.emprestimo.EmprestimoRequestDTO;
 import com.library_system.library.dto.penalidade.PenalidadeRequestDTO;
 import com.library_system.library.entity.Usuario;
 import jakarta.transaction.Transactional;
-
 import com.library_system.library.entity.Emprestimo;
 import com.library_system.library.entity.Exemplar;
 import com.library_system.library.entity.Livro;
