@@ -17,11 +17,11 @@ public class PenalidadeService {
     private final EmprestimoRepository emprestimoRepository;
     private Usuario usuario;
                          
-    public PenalidadeService(PenalidadeRepository repository, UsuarioRepostitory usuarioRepository, EmprestimoRepository emprestimoRepository, Usuario usuario) {
+    public PenalidadeService(PenalidadeRepository repository, UsuarioRepostitory usuarioRepository, EmprestimoRepository emprestimoRepository) {
         this.repository = repository;
         this.usuarioRepository = usuarioRepository;
         this.emprestimoRepository = emprestimoRepository;
-        this.usuario = usuario;
+        
 
     }
 

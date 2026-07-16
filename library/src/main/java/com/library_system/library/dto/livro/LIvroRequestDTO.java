@@ -1,12 +1,15 @@
 package com.library_system.library.dto.livro;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Setter
-@Getter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class LIvroRequestDTO {
 
     @NotBlank( message = "título obrigatório")
@@ -22,7 +25,7 @@ public class LIvroRequestDTO {
     @NotBlank(message = "editora obrigatória")
     private String editora;
 
-    @NotBlank(message = "ano de publicação obrigatório")
+    @NotNull(message = "ano de publicação obrigatório")
     private Integer anoPublicacao;
     
 }

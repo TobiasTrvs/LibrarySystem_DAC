@@ -9,7 +9,6 @@ import com.library_system.library.entity.Exemplar;
 import com.library_system.library.entity.Livro;
 import com.library_system.library.entity.StatusExemplar;
 import com.library_system.library.mapper.ExemplarMapper;
-
 import jakarta.transaction.Transactional;
 
 @Service
@@ -41,7 +40,7 @@ public class ExemplarService {
                 .orElseThrow(() -> new RuntimeException("Exemplar não encontrado"));
     }
 
-    // alterar esse método para receber um dto de exemplar
+    // alterar para receber um requestdto de exemplar
     public Exemplar atualizarStatus(Long id, StatusExemplar status) {
         Exemplar exemplar = buscarExemplarPorId(id);
         exemplar.setStatus(status);

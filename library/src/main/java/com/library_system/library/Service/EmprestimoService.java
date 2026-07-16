@@ -7,15 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.library_system.library.Repository.EmprestimoRepository;
 import com.library_system.library.Repository.ExemplarRepository;
+import com.library_system.library.Repository.ItemEmprestimoRepository;
 import com.library_system.library.Repository.LivroRepository;
 import com.library_system.library.Repository.PenalidadeRepository;
 import com.library_system.library.Repository.UsuarioRepostitory;
 import com.library_system.library.dto.emprestimo.EmprestimoRequestDTO;
+import com.library_system.library.dto.emprestimo.EmprestimoResponseDTO;
 import com.library_system.library.dto.penalidade.PenalidadeRequestDTO;
 import com.library_system.library.entity.Usuario;
+import com.library_system.library.mapper.EmprestimoMapper;
+import com.library_system.library.mapper.ItemEmprestimoMapper;
+
 import jakarta.transaction.Transactional;
 import com.library_system.library.entity.Emprestimo;
 import com.library_system.library.entity.Exemplar;
+import com.library_system.library.entity.ItemEmprestimo;
 import com.library_system.library.entity.Livro;
 import com.library_system.library.entity.Penalidade;
 import com.library_system.library.entity.StatusEmprestimo;
@@ -23,30 +29,43 @@ import com.library_system.library.entity.StatusExemplar;
 import com.library_system.library.entity.StatusPenalidade;
 
 @Service
-
 public class EmprestimoService {
     private final EmprestimoRepository repository;
-    private UsuarioRepostitory usuarioRepository;
-    private LivroRepository livroRepository;
-    private ExemplarRepository exemplarRepository;
-    private PenalidadeRepository penalidadeRepository;
+    private final UsuarioRepostitory usuarioRepository;
+    private final LivroRepository livroRepository;
+    private final ExemplarRepository exemplarRepository;
+    private final PenalidadeRepository penalidadeRepository;
     private Exemplar exemplar;
-    private PenalidadeService penalidadeService;
+    private final PenalidadeService penalidadeService;
 
-    public EmprestimoService(EmprestimoRepository repository) {
+    public EmprestimoService(EmprestimoRepository repository, UsuarioRepostitory usuarioRepostitory, LivroRepository livroRepository, ExemplarRepository exemplarRepository, PenalidadeService penalidadeService, PenalidadeRepository penalidadeRepository) {
         this.repository = repository;
+        this.usuarioRepository = usuarioRepostitory;
+        this.livroRepository = livroRepository;
+        this.exemplarRepository = exemplarRepository;
+        this.penalidadeService = penalidadeService;
+        this.penalidadeRepository = penalidadeRepository;
     }
 
 
     // realizar empréstimo
     // terminar o método de aplicar penalidade e validar empréstimo para depois concluir esse método
-    public Emprestimo realizarEmprestimo(EmprestimoRequestDTO dto) {
-        validarEmprestimo(dto.getUsuarioID(), dto.getLivroID()); // corrigir o parâmetrro passado para exemplar ID configurando o emprestimo requestDTO
-        Emprestimo emprestimo = new Emprestimo();
-        emprestimo.setDataEmprestimo(LocalDate.now());
-        emprestimo.setStatus(StatusEmprestimo.ATIVO);
-        emprestimo.setDataPrevistaDevolucao(LocalDate.now().plusDays(7));
-        return repository.save(emprestimo);
+    public EmprestimoResponseDTO realizarEmprestimo(EmprestimoRequestDTO dto) {
+        Usuario usuario = usuarioRepository.findById(dto.getUsuarioID()).orElseThrow(() ->new RuntimeException("Usuário não encontrado"));
+         // corrigir o parâmetrro passado para exemplar ID configurando o emprestimo requestDTO
+        // Emprestimo emprestimo = new Emprestimo();
+        // emprestimo.setDataEmprestimo(LocalDate.now());
+        // emprestimo.setStatus(StatusEmprestimo.ATIVO);
+        // emprestimo.setDataPrevistaDevolucao(LocalDate.now().plusDays(7));
+        Emprestimo emprestimo = EmprestimoMapper.toEntity(usuario);
+        Emprestimo emprestimoSalvo = repository.save(emprestimo);
+        ItemEmprestimo item = ItemEmprestimoMapper.toEntity(emprestimoSalvo, exemplar);
+        // itemEmprestimoRepository.save(item);
+        exemplar.setStatus(StatusExemplar.EMPRESTADO);
+        exemplarRepository.save(exemplar);
+
+
+        return EmprestimoMapper.toResponseDTO(emprestimoSalvo);
     }
 
     //listar empréstimos

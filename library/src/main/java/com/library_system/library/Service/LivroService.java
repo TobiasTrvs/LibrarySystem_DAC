@@ -6,10 +6,9 @@ import com.library_system.library.dto.livro.LIvroRequestDTO;
 import com.library_system.library.dto.livro.LivroResponseDTO;
 import com.library_system.library.entity.Livro;
 import com.library_system.library.mapper.LivroMapper;
-
 import jakarta.transaction.Transactional;
-@Service
 
+@Service
 public class LivroService {
 
      private final LivroRepository livroRepository;
